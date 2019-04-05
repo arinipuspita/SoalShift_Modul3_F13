@@ -76,6 +76,20 @@ Pada suatu hari ada orang yang ingin berjualan 1 jenis barang secara private, di
 	h. Menggunakan thread, socket, shared memory
 
 Jawaban :
+1. Buat 2 client (soal2_client dan soal2_pclient) dan 2 server (soal2_server dan soal2_pserver)
+2. Kedua server saling berhubungan serta berguna untuk menghitung stok barang yang ada
+3. Setiap server berpasangan dengan 1 client (soal2_server dengan soal2_client dan soal2_pserver dengan soal2_pclient), keduanya dipasangkan menggunakan port yang sama
+4. Apabila soal2_pclient bekerja dan berhasil melakukan transaksi maka jumlah stok barang di soal2_pserver berkurang begitu juga dengan soal2_server
+5. Apabila soal2_client bekerja dan berhasil melakukan transaksi maka jumlah stok barang di soal2_server bertambah begitu juga dengan soal2_pserver
+6. Setiap 5 detik sekali server penjual akan mencetak stoknya menggunakan
+```
+void *Print(void *argv){
+    while(1){
+        printf("%d\n", *stock);
+        sleep(5);
+    }
+}
+```
 
 ### Soal 3
 Agmal dan Iraj merupakan 2 sahabat yang sedang kuliah dan hidup satu kostan, sayangnya mereka mempunyai gaya hidup yang berkebalikan, dimana Iraj merupakan laki-laki yang sangat sehat,rajin berolahraga dan bangun tidak pernah kesiangan sedangkan Agmal hampir menghabiskan setengah umur hidupnya hanya untuk tidur dan ‘ngoding’. Dikarenakan mereka sahabat yang baik, Agmal dan iraj sama-sama ingin membuat satu sama lain mengikuti gaya hidup mereka dengan cara membuat Iraj sering tidur seperti Agmal, atau membuat Agmal selalu bangun pagi seperti Iraj. Buatlah suatu program C untuk menggambarkan kehidupan mereka dengan spesifikasi sebagai berikut:
@@ -99,6 +113,40 @@ Agmal dan Iraj merupakan 2 sahabat yang sedang kuliah dan hidup satu kostan, say
 		Syarat Menggunakan Lebih dari 1 Thread
 
 Jawaban :
+1. Stat awal untuk Agmal 0 sedangkan stat awal untuk Iraj 100
+2. Apabila fungsi Agmal dipanggil maka nilai Agmal bertambah 1
+```
+if(data->panggilAkmal == 1){
+            data->countAkmal += 1;
+            data->statAkmal += 15;
+            data->panggilAkmal = 0;
+        }
+```
+3. Apabila fungsi Iraj dipanggil maka nilai Iraj berkurang 20
+```
+if(data->panggilSiraj == 1){
+            data->countSiraj += 1;
+            data->statSiraj -= 20;
+            data->panggilSiraj = 0;
+        }
+```
+4. Apabila fungsi Agmal sudah dipanggil sebanyak 3 kali maka fungsi Iraj sleep selama 10 detik
+```
+if(data->countAkmal == 3){
+            printf("Fitur Iraj Ayo Tidur disabled 10 s\n");
+            data->sleepSiraj = 10;
+            data->countAkmal = 0;
+	    }
+```
+5. Apabila fungsi Iraj sudah dipanggil sebanyak 3 kali maka fungsi Agmal sleep selama 10 detik
+```
+if(data->countSiraj == 3){
+            printf("Fitur Agmal Ayo Bangun disabled 10 s\n");
+            data->sleepAkmal = 10;
+            data->countSiraj = 0;
+        }
+```
+6. Apabila nilai Agmal sudah mencapai 100 ataupun nilai Iraj sudah 0 maka proses akan berhenti dan akan exit
 
 ### Soal 4
 Buatlah sebuah program C dimana dapat menyimpan list proses yang sedang berjalan (ps -aux) maksimal 10 list proses. Dimana awalnya list proses disimpan dalam di 2 file ekstensi .txt yaitu  SimpanProses1.txt di direktori /home/Document/FolderProses1 dan SimpanProses2.txt di direktori /home/Document/FolderProses2 , setelah itu masing2 file di  kompres zip dengan format nama file KompresProses1.zip dan KompresProses2.zip dan file SimpanProses1.txt dan SimpanProses2.txt akan otomatis terhapus, setelah itu program akan menunggu selama 15 detik lalu program akan mengekstrak kembali file KompresProses1.zip dan KompresProses2.zip 
@@ -112,6 +160,61 @@ Dengan Syarat :
 	Boleh menggunakan system
 
 Jawaban :
+1. Buat 2 proses, proses1 berguna untuk file1 sedangkan proses2 untuk file2
+2. Simpan list proses di SimpanProses1.txt
+```
+    status += 1;
+    while(status != 2){}
+    system("ps -aux | head -n 11 > /home/nmhhabiby/Documents/FolderProses1/SimpanProses1.txt");
+```
+3. Kompres file tersebut dengan format KompresProses1.zip dan hapus file SimpanProses1.txt
+```
+    status += 2;
+    while(status != 6){}
+    system("cd /home/nmhhabiby/Documents/FolderProses1/; zip KompresProses1.zip SimpanProses1.txt; rm SimpanProses1.txt");
+```
+4. Sleep program selama 15 detik dan zip kembali folder yang telah di kompres tadi
+```
+    status += 7;
+    while(status != 20){}
+    printf("Menunggu 15 detik untuk mengekstrak kembali\n");
+    sleep(15);
+    system("cd /home/nmhhabiby/Documents/FolderProses1/; unzip KompresProses1.zip");
+}
+```
+5. Simpan list proses di SimpanProses2.txt
+```
+    status += 1;
+    while(status != 2){}
+    system("ps -aux | head -n 11 > /home/nmhhabiby/Documents/FolderProses1/SimpanProses2.txt");
+```
+6. Kompres file tersebut dengan format KompresProses2.zip dan hapus file SimpanProses2.txt
+```
+    status += 2;
+    while(status != 6){}
+    system("cd /home/nmhhabiby/Documents/FolderProses2/; zip KompresProses2.zip SimpanProses2.txt; rm SimpanProses2.txt");
+```
+7. Sleep program selama 15 detik dan zip kembali folder yang telah di kompres tadi
+```
+    status += 7;
+    while(status != 20){}
+    printf("Menunggu 15 detik untuk mengekstrak kembali\n");
+    sleep(15);
+    system("cd /home/nmhhabiby/Documents/FolderProses2/; unzip KompresProses2.zip");
+}
+```
+8. Buat thread agar semua proses dilaksanakan secara bersama
+```
+int main(){
+    pthread_t proses1, proses2;
+    status = 0;
+    pthread_create(&proses1, NULL, Proses1, NULL);
+    pthread_create(&proses2, NULL, Proses2, NULL);
+    pthread_join(proses1, NULL);
+    pthread_join(proses2, NULL);
+    printf("\n");
+}
+```
 
 ### Soal 5
 Angga, adik Jiwang akan berulang tahun yang ke sembilan pada tanggal 6 April besok. Karena lupa menabung, Jiwang tidak mempunyai uang sepeserpun untuk membelikan Angga kado. Kamu sebagai sahabat Jiwang ingin membantu Jiwang membahagiakan adiknya sehingga kamu menawarkan bantuan membuatkan permainan komputer sederhana menggunakan program C. Jiwang sangat menyukai idemu tersebut. Berikut permainan yang Jiwang minta. 
@@ -167,3 +270,89 @@ Angga, adik Jiwang akan berulang tahun yang ke sembilan pada tanggal 6 April bes
 	G. Pastikan terminal hanya mendisplay status detik ini sesuai scene terkait (hint: menggunakan system(“clear”))
 
 Jawaban :
+1. Buat shared memory
+```
+    key_t key = 6969;
+    shmid = shmget(key, sizeof(int), IPC_CREAT | 0777);
+    stock = shmat(shmid, NULL, 0);
+    c = 'z';
+    stateMenu = 0;
+    isExit = 0;
+    system("clear");
+    pthread_t hunger, regen, input, render, check, hygiene, bath;
+    slave = malloc(sizeof(struct budak));
+```
+2. Status awal untuk monster setelah dibuat
+```
+    slave->hunger = maxHunger;
+    slave->hygiene = maxHigen;
+    slave->health = maxHp;
+```
+3. Buat thread agar semua program dapat berjalan bersama
+```
+    pthread_create(&hunger, NULL, Hunger, NULL);
+    pthread_create(&regen, NULL, Regen, NULL);
+    pthread_create(&input, NULL, Input, NULL);
+    pthread_create(&render, NULL, Render, NULL);
+    pthread_create(&check, NULL, CheckStat, NULL);
+    pthread_create(&hygiene, NULL, Hygiene, NULL);
+    pthread_create(&bath, NULL, Bath, NULL);
+ ```
+ 4. Terdapat fungsi input yang dijalankan secara terus menerus yang berfungsi untuk menampilkan menu dan memasukkan pilihan dari menu yang ditampilkan
+ 5. Fungsi Render digunakan untuk menampilkan daftar menu sesuai dengan state menu yang diminta pada fungsi inout
+ 6. Apabila stateMenu==0 maka akan menampilkan menu standby mode
+ ```
+ 	    if(stateMenu == 0){
+            printf("Standby Mode\n");
+            printf("Health : %d\nHunger : %d\nHygiene : %d\n", slave->health, slave->hunger, slave->hygiene);
+            printf("Food left : %d\nBath will be ready in %ds\n", slave->food, slave->bathCd);
+            printf("Choices\n1. Eat\n2. Bath\n3. Battle\n4. Shop\n5. Exit\n");
+        }
+```
+7. Apabila stateMenu==1 maka akan menampilkan menu battle mode
+ ```
+ 	    printf("Battle Mode\n");
+            printf("Monster's Health : %d\nEnemy's Health : %d\n", slave->health, enemyHP);
+            printf("Choice\n1. Attack\n2. Run\n");
+        }
+```
+8. Apabila stateMenu bernilai selain 0 atau 1 maka akan menampilkan menu shop mode
+ ```
+ 	    printf("Shop Mode\n");
+            printf("Shop food stock : %d\nYour food stock : %d\n", *stock, slave->food);
+            printf("Choice\n1. Buy\n2. Back\n");
+	    }
+```
+9. Buat fungsi untuk Regen untuk mengupdate status health monster
+```
+void *Regen(){
+    while(1){
+        sleep(10);
+        if(stateMenu != 1){
+            slave->health += 5;
+        }
+    }
+}
+```
+10. Buat fungsi untuk Regen untuk mengupdate status bath monster
+```
+void *Bath(){
+    while(1){
+        while(slave->bathCd > 0){
+            sleep(1);
+            slave->bathCd -= 1;
+        }
+    }
+}
+```
+11. Buat fungsi untuk Regen untuk mengupdate status hygiene monster
+```
+void *Hygiene(){
+    while(1){
+        sleep(30);
+        if(stateMenu != 1)
+            slave->hygiene -= 10;
+    }
+}
+```
+12. Buat fungsi untuk 
