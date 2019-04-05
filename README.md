@@ -78,7 +78,6 @@ Angga, adik Jiwang akan berulang tahun yang ke sembilan pada tanggal 6 April bes
 	A. Program mampu mendeteksi input berupa key press. (Program bisa berjalan tanpa perlu menekan tombol enter)
 	B. Program terdiri dari 3 scene yaitu standby, battle, dan shop.
 	C. Pada saat berada di standby scene, program selalu menampilkan health status, hunger status, hygiene status, stok makanan tersisa, dan juga status kamar mandi (“Bath is ready” jika bisa digunakan, “Bath will be ready in [bath cooldown]s” jika sedang cooldown). Selain itu program selalu menampilkan 5 menu, yaitu memberi makan, mandi, battle, shop, dan exit. Contoh :
-
 		Standby Mode
 		Health : [health status]
 		Hunger : [hunger status]
@@ -91,31 +90,24 @@ Angga, adik Jiwang akan berulang tahun yang ke sembilan pada tanggal 6 April bes
 		3. Battle
 		4. Shop
 		5. Exit
-
 	D. Pada saat berada di battle scene, program selalu menampilkan health status milik pemain dan monster NPC. Selain itu, program selalu menampilkan 2 menu yaitu serang atau lari. Contoh :
-
 		Battle Mode
 		Monster’s Health : [health status]
 		Enemy’s Health : [enemy health status]
 		Choices
 		1. Attack
 		2. Run
-
 	E. Pada saat berada di shop scene versi pembeli, program selalu menampilkan food stock toko dan milik pemain. Selain itu, program selalu menampilkan 2 menu yaitu beli dan kembali ke standby scene. Contoh :
-
 		Shop Mode
 		Shop food stock : [shop food stock]
 		Your food stock : [your food stock]
 		Choices
 		1. Buy
 		2. Back
-
 	F. Pada program penjual, program selalu menampilkan food stock toko. Selain itu, program juga menampilkan 2 menu yaitu restock dan exit. Contoh :
-
 		Shop
 		Food stock : [shop food stock]
 		Choices
 		1. Restock
 		2. Exit
-
 	G. Pastikan terminal hanya mendisplay status detik ini sesuai scene terkait (hint: menggunakan system(“clear”))
