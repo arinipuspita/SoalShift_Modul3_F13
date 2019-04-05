@@ -355,4 +355,18 @@ void *Hygiene(){
     }
 }
 ```
-12. Buat fungsi untuk 
+12. Buat fungsi untuk checkstatus
+```
+if(slave->health <= 0){
+            printf("AWWWWW, si %s mati karena kehabisan nyawa\n", slave->name);
+            isExit = 1;
+        }
+        else if(slave->hunger <= 0){
+            printf("AWWWWW, si %s mati karena kelaparan\n", slave->name);
+            isExit = 1;
+        }
+        else if(slave->hygiene <= 0){
+            printf("AWWWWW, si %s mati karena terlalu jorok\n", slave->name);
+            isExit = 1;
+        }
+```
